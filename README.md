@@ -11,7 +11,7 @@ Breast cancer accounts for 31% of all cancer cases and 15% of all cancer deaths 
 Task 1: Data retrieval and processing. <br>
 
 Task 2: Extraction of TME features from single cell RNA-seq (scRNA-seq) data:
-- Task 2a: scRNA-seq preprocessing and clustering.
+- Task 2a: scRNA-seq preprocessing, batch correction, and clustering.
 - Task 2b: cell type annotation.
 - Task 2c: Extraction of molecular profiles of cell types of interest. <br>
 
