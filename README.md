@@ -18,3 +18,19 @@ Task 2: Extraction of TME features from single cell RNA-seq (scRNA-seq) data:
 Task 3: Development of predictive models using the extracted features to predict disease progression/recurrence.
 - Task 3a: Processing of the METABRIC dataset.
 - Task 3b: Training of machine learning models to predict disease progression/recurrence.
+
+
+### **Team:**
+Mohamed Omar <br>
+Zergham Ahmed <br>
+Kristin Qian <br>
+Taylor Marohl <br>
+Jung Hun Oh <br>
+Chi Zhang <br>
+Bei Wei <br>
+David Enoma <br>
+
+
+### **Acknowledgements:**
+
+Thank you to the Human Tumor Atlas Network (HTAN), NIH, NCI, and Cancer Genomics Cloud (Seven Bridges) for your support during this project!
