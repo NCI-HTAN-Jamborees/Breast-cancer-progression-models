@@ -31,8 +31,8 @@ The scRNA-seq data used in this project were accessed using the [HTAN Data Porta
    
 ## Installation and Setup
 
-1. Clone the repository <br>
-2. Install and load required packages: <br>
+1. Clone the repository: `git clone https://github.com/NCI-HTAN-Jamborees/Breast-cancer-progression-models.git`
+2. Install and load required packages: `pip install -r requirements.txt`
 
 ## Results: ###
 
