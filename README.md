@@ -22,7 +22,13 @@ Task 3: Development of predictive models using the extracted features to predict
 The scRNA-seq data used in this project were accessed using the [HTAN Data Portal](https://data.humantumoratlas.org/), and were generated as part of the Human Tumor Atlas Pilot Project (HTAPP). Gene expression and corresponding clinical data were obtained from the Molecular Taxonomy of Breast Cancer International Consortium (METABRIC) studies from [cBioPortal](https://www.cbioportal.org/study/summary?id=brca_metabric). 
 
 ## Tools and Frameworks Used
-
+1. Python version 3.11
+2. Scanpy version 1.9.6
+3. Pandas version 2.1.1
+4. Synapse client version 3.2.0
+5. Hdf5 plugin 
+6. Pathlib
+   
 ## Installation and Setup
 
 1. Clone the repository <br>
