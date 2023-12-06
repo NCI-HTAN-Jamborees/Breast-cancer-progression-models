@@ -1,0 +1,18 @@
+# requirements.txt
+
+# Python
+python==3.11.0
+
+# Scanpy
+scanpy==1.9.6
+
+# Pandas
+pandas==2.1.1
+
+# Synapse client
+synapseclient==3.2.0
+
+# Hdf5 plugin
+h5py==3.5.0
+
+# Pathlib (included in the standard library for Python 3.4 and above, no need to specify version)
