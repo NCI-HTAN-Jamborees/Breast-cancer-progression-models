@@ -21,7 +21,7 @@ Task 3: Development of predictive models using the extracted features to predict
 
 ## Data: ###
 
-The scRNA-seq data used in this project were accessed using the [HTAN Data Portal] (https://data.humantumoratlas.org/), and were generated as part of the Human Tumor Atlas Pilot Project (HTAPP). Gene expression and corresponding clinical data were obtained from the Molecular Taxonomy of Breast Cancer International Consortium (METABRIC) studies from [cBioPortal] (https://www.cbioportal.org/study/summary?id=brca_metabric). 
+The scRNA-seq data used in this project were accessed using the [HTAN Data Portal](https://data.humantumoratlas.org/), and were generated as part of the Human Tumor Atlas Pilot Project (HTAPP). Gene expression and corresponding clinical data were obtained from the Molecular Taxonomy of Breast Cancer International Consortium (METABRIC) studies from [cBioPortal](https://www.cbioportal.org/study/summary?id=brca_metabric). 
 
 ## Results: ###
 
