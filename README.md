@@ -3,10 +3,10 @@
 ## **Goal**: Build tumor microenvironment-informed machine learning models to predict breast cancer prognostication/progression <br>
 
 
-### **Background and Rationale:** <br> 
+## **Background and Rationale:** <br> 
 Breast cancer accounts for 31% of all cancer cases and 15% of all cancer deaths among women worldwide. Currently existing genomic tests (Oncotype DX, MammaPrint, and PAM50) that guide treatment decisions only analyze expression of genes associated with the risk of recurrence and lack depth as they do not consider the full tumor microenvironment (TME). In this project, we hope to utilize and integrate single-cell transcriptomic methods (e.g. scRNA-seq) and spatial data (e.g. CyCIF imaging data) to uncover the interplay between diverse cell populations in the TME of breast cancer tissues from patients with non-recurring or recurrent disease in order to train and power our machine learning models to predict disease progression as it relates to clinical outcomes.
 
-### **Project Outline:**
+## **Project Outline:**
 
 Task 1: Data retrieval and processing. <br>
 
@@ -19,14 +19,14 @@ Task 3: Development of predictive models using the extracted features to predict
 - Task 3a: Processing of the METABRIC dataset.
 - Task 3b: Training of machine learning models to predict disease progression/recurrence.
 
-### Data: ###
+## Data: ###
 
-### Results: ###
+## Results: ###
 
-### Future Directions: ###
+## Future Directions: ###
 
 
-### **Team:**
+## **Team:**
 Mohamed Omar <br>
 Zergham Ahmed <br>
 Kristin Qian <br>
