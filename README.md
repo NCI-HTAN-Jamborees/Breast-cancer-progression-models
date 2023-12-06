@@ -1,6 +1,4 @@
-# Breast-cancer-progression-models
-
-## **Goal**: Build tumor microenvironment-informed machine learning models to predict breast cancer prognostication/progression <br>
+# Building tumor microenvironment-informed machine learning models to predict breast cancer prognostication/progression
 
 
 ## **Background and Rationale:** <br> 
@@ -23,6 +21,13 @@ Task 3: Development of predictive models using the extracted features to predict
 
 The scRNA-seq data used in this project were accessed using the [HTAN Data Portal](https://data.humantumoratlas.org/), and were generated as part of the Human Tumor Atlas Pilot Project (HTAPP). Gene expression and corresponding clinical data were obtained from the Molecular Taxonomy of Breast Cancer International Consortium (METABRIC) studies from [cBioPortal](https://www.cbioportal.org/study/summary?id=brca_metabric). 
 
+## Tools and Frameworks Used
+
+## Installation and Setup
+
+1. Clone the repository <br>
+2. Install and load required packages: <br>
+
 ## Results: ###
 
 ## Future Directions: ###
@@ -38,6 +43,7 @@ Chi Zhang <br>
 Bei Wei <br>
 David Enoma <br>
 
+## References
 
 ### **Acknowledgements:**
 
