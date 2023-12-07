@@ -1,0 +1,220 @@
+---
+title: "pseudobulk"
+output: html_document
+date: "2023-12-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r libraries}
+# libraries for pseudobulk
+library(scater)
+library(data.table)
+library(Seurat)
+library(tidyverse)
+library(cowplot)
+BiocManager::install("Matrix.utils")
+library(Matrix.utils)
+library(edgeR)
+library(dplyr)
+library(magrittr)
+library(Matrix)
+library(purrr)
+library(reshape2)
+library(S4Vectors)
+library(tibble)
+#install.packages("matrixStats")
+library(SingleCellExperiment)
+library(pheatmap)
+library(apeglm)
+library(png)
+library(DESeq2)
+library(RColorBrewer)
+```
+```{r}
+# Read in expression data and metadata
+expr_matrix <- fread("/sbgenomics/projects/rowan_beck_era/rowan_beck_era/project-3-breast-cancer-progression-models/expression_matrix_raw_counts.csv")
+metadata <- read.csv("/sbgenomics/projects/rowan_beck_era/rowan_beck_era/project-3-breast-cancer-progression-models/cells_metadata.csv")
+
+saveRDS(expr_matrix, file = "/sbgenomics/output-files/expr_matrix.rds")
+
+readin <- readRDS("expr_matrix.rds")
+
+
+```
+
+```{r}
+#make seurat object 
+## MAYBE NOT NECESSARY??
+ # seurat <- CreateSeuratObject(t(expr_matrix), 
+ #                                 meta.data = metadata)
+```
+
+```{r}
+sce <- SingleCellExperiment(assays = list(counts = as.matrix(expr_matrix)))
+colData(sce) <- DataFrame(metadata)
+
+# # Identify groups for aggregation of counts
+groups <- colData(sce)[, c("cluster_id", "sample_id")]
+
+```
+
+```{r}
+# Read in the dataset
+# Extract raw counts and metadata to create SingleCellExperiment object
+# counts <- seurat@assays$RNA@counts 
+# 
+# metadata <- seurat@meta.data
+# 
+# # Set up metadata as desired for aggregation and DE analysis
+# metadata$cluster_id <- factor(seurat@active.ident)
+# 
+# # Create single cell experiment object
+# sce <- SingleCellExperiment(assays = list(counts = counts), 
+#                            colData = metadata)
+# 
+
+```
+
+```{r}
+# Explore the raw counts for the dataset
+
+## Check the assays present
+assays(sce)
+
+## Explore the raw counts for the dataset
+dim(counts(sce))
+
+counts(sce)[1:6, 1:6]
+```
+
+```{r}
+## Explore the cellular metadata for the dataset
+dim(colData(sce))
+
+head(colData(sce))
+```
+
+```{r}
+# Named vector of cluster names
+kids <- purrr::set_names(levels(sce$cluster_id))
+kids
+
+# Total number of clusters
+nk <- length(kids)
+nk
+
+# Named vector of sample names
+sids <- purrr::set_names(levels(sce$sample_id))
+
+# Total number of samples 
+ns <- length(sids)
+ns
+```
+
+```{r}
+# don't need to do 
+# Generate sample level metadata
+
+## Determine the number of cells per sample
+table(sce$sample_id)
+
+## Turn named vector into a numeric vector of number of cells per sample
+n_cells <- as.numeric(table(sce$sample_id))
+
+## Determine how to reoder the samples (rows) of the metadata to match the order of sample names in sids vector
+m <- match(sids, sce$sample_id)
+
+## Create the sample level metadata by combining the reordered metadata with the number of cells corresponding to each sample.
+ei <- data.frame(colData(sce)[m, ], 
+                  n_cells, row.names = NULL) %>% 
+                select(-"cluster_id")
+ei
+```
+
+```{r}
+# don't need to do?
+# Perform QC if not already performed
+dim(sce)
+
+# Calculate quality control (QC) metrics
+sce <- calculateQCMetrics(sce)
+
+# Get cells w/ few/many detected genes
+sce$is_outlier <- isOutlier(
+        metric = sce$total_features_by_counts,
+        nmads = 2, type = "both", log = TRUE)
+
+# Remove outlier cells
+sce <- sce[, !sce$is_outlier]
+dim(sce)
+
+## Remove lowly expressed genes which have less than 10 cells with any counts
+sce <- sce[rowSums(counts(sce) > 1) >= 10, ]
+
+dim(sce)
+```
+
+```{r}
+# Aggregate the counts per sample_id and cluster_id
+
+# Subset metadata to only include the cluster and sample IDs to aggregate across
+groups <- colData(sce)[, c("cluster_id", "sample_id")]
+
+# Aggregate across cluster-sample groups
+pb <- aggregate.Matrix(t(counts(sce)), 
+                       groupings = groups, fun = "sum") 
+
+class(pb)
+
+dim(pb)
+
+pb[1:6, 1:6]
+```
+
+```{r}
+# Not every cluster is present in all samples; create a vector that represents how to split samples
+splitf <- sapply(stringr::str_split(rownames(pb), 
+                                    pattern = "_",  
+                                    n = 2), 
+                 `[`, 1)
+```
+
+```{r}
+# Turn into a list and split the list into components for each cluster and transform, so rows are genes and columns are samples and make rownames as the sample IDs
+pb <- split.data.frame(pb, 
+                       factor(splitf)) %>%
+        lapply(function(u) 
+                set_colnames(t(u), 
+                             stringr::str_extract(rownames(u), "(?<=_)[:alnum:]+")))
+
+class(pb)
+
+# Explore the different components of list
+str(pb)
+```
+
+```{r}
+# Print out the table of cells in each cluster-sample group
+options(width = 100)
+table(sce$cluster_id, sce$sample_id)
+```
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
